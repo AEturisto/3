@@ -1,9 +1,6 @@
 package com.todow.e.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class UserModel {
@@ -11,7 +8,10 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String token;
+    @Column(unique = true,nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String password;
     private int role;
 
