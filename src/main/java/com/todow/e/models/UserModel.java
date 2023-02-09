@@ -2,6 +2,8 @@ package com.todow.e.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class UserModel {
     @Id
@@ -11,9 +13,20 @@ public class UserModel {
     @Column(unique = true,nullable = false)
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<TaskModel> tasks;
+
     @Column(nullable = false)
     private String password;
     private int role;
+
+    public List<TaskModel> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskModel> tasks) {
+        this.tasks = tasks;
+    }
 
     public UserModel(){
     }

@@ -29,22 +29,16 @@ public class UserController {
             return ResponseEntity.badRequest().body(answer);
         }
     }
-
     @PostMapping("/auth")
     public ResponseEntity auth(@RequestBody UserModel user) {
         try{
             HashMap<String, Object> answer = new HashMap<>();
-            if(user.getName() == null){
-                answer.put("Error", "Name field must not be empty");
-                return ResponseEntity.badRequest().body(answer);
-            }
-            if(user.getPassword() == null){
-                answer.put("Error", "Password field must not be empty");
-                return ResponseEntity.badRequest().body(answer);
-            }
-            return ResponseEntity.ok("real ok");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
+            answer.put("token", userService.auth(user).getToken());
+            return ResponseEntity.ok(answer);
+        } catch (MalformedInputException e) {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("Error", e.getMessage());
+            return ResponseEntity.badRequest().body(answer);
         }
     }
 }

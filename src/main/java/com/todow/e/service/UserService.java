@@ -4,10 +4,10 @@ import com.todow.e.exceptions.MalformedInputException;
 import com.todow.e.models.UserModel;
 import com.todow.e.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -53,6 +53,21 @@ public class UserService {
         user.setToken(generateToken(64));
         return userRepo.save(user);
     }
+
+    public UserModel auth(UserModel user) throws MalformedInputException{
+        if(user.getName() == null){
+            throw new MalformedInputException("Name field must not be empty");
+        }
+        if(user.getPassword() == null){
+            throw new MalformedInputException("Password field must not be empty");
+        }
+        if(userRepo.findByName(user.getName()) == null || !Objects.equals(userRepo.findByName(user.getName()).getPassword(), user.getPassword())) {
+            throw new MalformedInputException("Password or Name entered incorrectly");
+        }
+        return userRepo.findByName(user.getName());
+    }
+
+
 
     public String generateToken(int length){
         String characters = "qwertyuiopafghlzxcvnmQWERTYUIOPASDFGHJKLZXM123457890";
