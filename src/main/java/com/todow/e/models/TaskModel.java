@@ -10,8 +10,8 @@ public class TaskModel {
     @Column(columnDefinition = "TEXT")
     private String name;
     @Column(columnDefinition = "TEXT")
-    private String commentary;
-    private boolean isDone;
+    private String description;
+    private boolean completed;
     @ManyToOne
     @JoinColumn(name = "ownerId")
     private UserModel owner;
@@ -27,12 +27,12 @@ public class TaskModel {
         this.owner = owner;
     }
 
-    public boolean getDone() {
-        return isDone;
+    public boolean getCompleted() {
+        return completed;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public int getId() {
@@ -51,11 +51,11 @@ public class TaskModel {
         this.name = name;
     }
 
-    public String getCommentary() {
-        return commentary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCommentary(String commentary) {
-        this.commentary = commentary;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
